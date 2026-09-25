@@ -10,58 +10,103 @@ function App() {
   const [titulo, setTitulo] = useState('')
   const [descripcion, setDescripcion] = useState('')
 
+  const [idEditando, setIdEditando] = useState<number | null>(null)
+  const [estado, setEstado] = useState('Pendiente')
+
 
   // GUARDAR TAREA
-  const guardarTarea = () => {
+ const guardarTarea = () => {
 
-    fetch('http://127.0.0.1:5000/tareas', {
-      method: 'POST',
+  const metodo = idEditando === null ? 'POST' : 'PUT'
 
-      headers: {
-        'Content-Type': 'application/json'
-      },
+  const url = idEditando === null
+    ? 'http://127.0.0.1:5000/tareas'
+    : `http://127.0.0.1:5000/tareas/${idEditando}`
 
-      body: JSON.stringify({
-        titulo: titulo,
-        descripcion: descripcion
-      })
+  fetch(url, {
+
+    method: metodo,
+
+    headers: {
+      'Content-Type': 'application/json'
+    },
+
+    body: JSON.stringify({
+      titulo: titulo,
+      descripcion: descripcion,
+      estado: estado
     })
 
-      .then(respuesta => {
+  })
+    .then(respuesta => {
 
-        if (!respuesta.ok) {
-          throw new Error('Error al guardar la tarea')
-        }
+      if (!respuesta.ok) {
+        throw new Error('Error al guardar la tarea')
+      }
 
-        return respuesta.json()
-      })
+      return respuesta.json()
+    })
 
-      .then(() => {
+    .then(() => {
 
-        // Volvemos a consultar las tareas reales
-        return fetch('http://127.0.0.1:5000/tareas')
+      return fetch('http://127.0.0.1:5000/tareas')
+    })
 
-      })
+    .then(respuesta => respuesta.json())
 
-      .then(respuesta => respuesta.json())
+    .then(datos => {
 
-      .then(datos => {
+      setTareas(datos.tareas)
 
-        setTareas(datos.tareas)
+      setTitulo('')
+      setDescripcion('')
+      setEstado('Pendiente')
+      setIdEditando(null)
+      setMostrarFormulario(false)
 
-        setTitulo('')
-        setDescripcion('')
-        setMostrarFormulario(false)
+    })
 
-      })
+    .catch(error => {
+      console.error('Error:', error)
+    })
+}
 
-      .catch(error => {
+  //eliminar tareas
+  const eliminarTarea = (id: number) => {
 
-        console.error('Error:', error)
+  fetch(`http://127.0.0.1:5000/tareas/${id}`, {
+    method: 'DELETE'
+  })
+    .then(respuesta => {
+      if (!respuesta.ok) {
+        throw new Error('Error al eliminar la tarea')
+      }
 
-      })
-  }
+      return respuesta.json()
+    })
+    .then(() => {
 
+      // Volvemos a consultar las tareas
+      return fetch('http://127.0.0.1:5000/tareas')
+    })
+    .then(respuesta => respuesta.json())
+    .then(datos => {
+      setTareas(datos.tareas)
+    })
+    .catch(error => {
+      console.error('Error:', error)
+    })
+}
+
+//otro de eliminar 
+const editarTarea = (tarea: any) => {
+
+  setIdEditando(tarea.id)
+  setTitulo(tarea.titulo)
+  setDescripcion(tarea.descripcion)
+  setEstado(tarea.estado)
+  setMostrarFormulario(true)
+}
 
   // OBTENER TAREAS
   useEffect(() => {
@@ -134,6 +179,19 @@ function App() {
             value={descripcion}
             onChange={(e) => setDescripcion(e.target.value)}
           />
+
+          <label>
+  Estado
+</label>
+
+<select
+  value={estado}
+  onChange={(e) => setEstado(e.target.value)}
+>
+  <option value="Pendiente">Pendiente</option>
+  <option value="En proceso">En proceso</option>
+  <option value="Completada">Completada</option>
+</select>
 
 
           <div className="botones-formulario">
@@ -212,13 +270,25 @@ function App() {
               </p>
 
 
-              <div className="tarjeta-abajo">
+       <div className="tarjeta-abajo">
 
-                <span>
-                  Usuario: {tarea.usuario_id}
-                </span>
+  <span>
+    Usuario: {tarea.usuario_id}
+  </span>
 
-              </div>
+  <button
+    onClick={() => editarTarea(tarea)}
+  >
+    Editar
+  </button>
+
+  <button
+    onClick={() => eliminarTarea(tarea.id)}
+  >
+    Eliminar
+  </button>
+
+</div>
 
             </div>
 
