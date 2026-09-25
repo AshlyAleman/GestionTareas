@@ -1,0 +1,81 @@
+/* "Selecciona TODOS los elementos HTML."*/
+*{
+    box-sizing: border-box; /* box sirve para controlar tamanos de todo*/
+}
+
+
+/*body es ponle color a toda la pagina  */
+body{ 
+    margin: 0; /*margin espacio afuera de la pagina*/
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+        'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+        sans-serif;
+    background-color: black; /* color de la pagina toda*/
+    color: red; /*texto letras de la pagina*/
+}
+.app{
+    max-width: 1100px; /* El elemento no puede superar los 1100px de ancho*/
+    margin: 0 auto;
+    padding: 0 20px; /*espacio adentro dela caja*/ 
+
+   /* Margin = afuera
+Border = borde
+Padding = adentro
+*/
+}
+
+/* encabezado */
+
+.header{
+    display: flex; /*quiero organizar los elementos de este contenedor*/
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+}
+
+
+.header h1{
+    font-size: 32px;
+    margin: 0;
+}
+
+.header p{
+    margin-top: 8px;
+    color:purple;
+}
+
+/* buttons */
+
+button{
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: black;
+    color: green;
+    cursor: pointer;
+}
+
+.button:hover{
+    background-color: yellow;
+}
+
+.formulario{
+   background:pink;
+   padding: 25px;
+   border-radius: 8px;
+   margin-bottom: 20px;
+   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.formulario h2{
+    margin-top: 0;
+}
+
+.formulario label{
+    display:block;
+    margin-top: 15px;
+    margin-bottom: 9px;
+    font-weight: bold;
+}
+
+.formulario input, .formulario textarea { width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 15px; } .formulario textarea { min-height: 100px; resize: vertical; } /* BOTONES DEL FORMULARIO */ .botones-formulario { display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px; } .boton-cancelar, .boton-guardar { border: none; padding: 11px 18px; border-radius: 8px; cursor: pointer; } .boton-cancelar { background: #e5e7eb; } .boton-guardar { background: #2563eb; color: white; } /* TÍTULO DE TAREAS */ .titulo-tareas { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; } .titulo-tareas h2 { margin: 0; } .titulo-tareas span { background: #e5e7eb; padding: 5px 10px; border-radius: 20px; font-size: 13px; } /* CARTAS */ .contenedor-tareas { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; } .tarjeta { background: white; border-radius: 15px; padding: 22px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.06); transition: transform 0.2s, box-shadow 0.2s; } .tarjeta:hover { transform: translateY(-4px); box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); } .tarjeta-arriba { display: flex; justify-content: space-between; align-items: center; } .tarjeta h3 { margin: 18px 0 10px; font-size: 19px; } .descripcion { color: #6b7280; line-height: 1.5; min-height: 45px; } /* ESTADOS */ .estado { padding: 5px 10px; border-radius: 20px; font-size: 12px; font-weight: bold; } .pendiente { background: #fef3c7; color: #92400e; } .en-proceso { background: #dbeafe; color: #1e40af; } .completada { background: #dcfce7; color: #166534; } /* ID */ .id-tarea { color: #9ca3af; font-size: 13px; } /* PARTE INFERIOR */ .tarjeta-abajo { border-top: 1px solid #e5e7eb; margin-top: 20px; padding-top: 12px; color: #9ca3af; font-size: 13px; } /* SIN TAREAS */ .sin-tareas { background: white; padding: 50px; text-align: center; border-radius: 15px; grid-column: 1 / -1; } .sin-tareas p { color: #6b7280; } /* RESPONSIVE */ @media (max-width: 800px) { .contenedor-tareas { grid-template-columns: repeat(2, 1fr); } } @media (max-width: 550px) { .encabezado { flex-direction: column; align-items: flex-start; gap: 20px; } .contenedor-tareas { grid-template-columns: 1fr; } }
