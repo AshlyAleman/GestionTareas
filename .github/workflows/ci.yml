@@ -49,3 +49,7 @@ jobs:
       - name: Instalar dependencias
         working-directory: mi_api
         run: pip install -r requirements.txt
+
+      - name: Ejecutar pruebas
+        working-directory: mi_api
+        run: pytest
