@@ -41,11 +41,13 @@ jobs:
       - name: Instalar ODBC Driver para SQL Server
         run: |
           sudo apt-get update
-          sudo apt-get install -y curl gnupg unixodbc
-          curl -fsSL https://packages.microsoft.com/keys/microsoft.asc | sudo gpg --dearmor -o /usr/share/keyrings/microsoft-prod.gpg
-          curl -fsSL https://packages.microsoft.com/config/ubuntu/24.04/prod.list | sudo tee /etc/apt/sources.list.d/mssql-release.list
+          sudo apt-get install -y curl gnupg unixodbc unixodbc-dev
+          curl -sSL -O https://packages.microsoft.com/config/ubuntu/24.04/packages-microsoft-prod.deb
+          sudo dpkg -i packages-microsoft-prod.deb
+          rm packages-microsoft-prod.deb
           sudo apt-get update
           sudo ACCEPT_EULA=Y apt-get install -y msodbcsql17
+          odbcinst -q -d
 
       - name: Configurar Python
         uses: actions/setup-python@v5
