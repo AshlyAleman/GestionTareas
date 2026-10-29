@@ -1,6 +1,7 @@
 
 import { useEffect, useState } from 'react'
 import './App.css'
+import hero from "./assets/hero.png";
 
 function App() {
 
@@ -129,9 +130,115 @@ const editarTarea = (tarea: any) => {
 
   }, [])
 
-
+//NEW CODIGO
   return (
     <div className="app">
+
+      {
+      <section className="hero-inicio">
+        <div className="hero-contenido">
+          <span className="hero-etiqueta">
+            <span className="punto-verde"></span>
+            TU ESPACIO DE PRODUCTIVIDAD
+          </span>
+
+          <h1>
+            Tus tareas.
+            <br />
+            <span>Tu progreso.</span>
+          </h1>
+
+          <p>
+            Organiza tus ideas, administra tus pendientes
+            y convierte tus objetivos en logros.
+          </p>
+
+          <button
+            className="hero-boton"
+            onClick={() =>
+              document
+                .getElementById("mis-tareas")
+                ?.scrollIntoView({ behavior: "smooth" })
+            }
+          >
+            Explorar mis tareas →
+          </button>
+
+          <div className="hero-detalle">
+            <span>✓</span> Organiza · Planifica · Avanza
+          </div>
+        </div>
+
+        <div className="hero-visual">
+          <div className="hero-resplandor"></div>
+          <div className="orbita orbita-1"></div>
+          <div className="orbita orbita-2"></div>
+
+          <div className="tarjeta-flotante tarjeta-principal">
+            <div className="tarjeta-cabecera">
+              <div>
+                <span className="texto-pequeno">MI ESPACIO</span>
+                <h3>Resumen diario</h3>
+              </div>
+              <span className="icono-calendario">▦</span>
+            </div>
+
+            <div className="progreso-circulo">
+              <div className="progreso-centro">
+                <strong>75%</strong>
+                <span>completado</span>
+              </div>
+            </div>
+
+            <div className="barra-progreso">
+              <div></div>
+            </div>
+
+            <p className="texto-progreso">¡Vas por buen camino!</p>
+
+            <div className="mini-tarea">
+              <span className="check-tarea">✓</span>
+              <span>Organizar pendientes</span>
+              <span className="estado-listo">Listo</span>
+            </div>
+
+            <div className="mini-tarea">
+              <span className="check-vacio"></span>
+              <span>Completar proyecto</span>
+              <span className="estado-pendiente">En curso</span>
+            </div>
+
+            <div className="mini-tarea">
+              <span className="check-vacio"></span>
+              <span>Planificar mañana</span>
+              <span className="estado-pendiente">Pendiente</span>
+            </div>
+          </div>
+
+          <div className="tarjeta-flotante tarjeta-notificacion">
+            <span className="notificacion-icono">✓</span>
+            <div>
+              <strong>¡Buen trabajo!</strong>
+              <p>Un paso más hacia tu meta</p>
+            </div>
+          </div>
+
+          <div className="tarjeta-flotante tarjeta-fecha">
+            <span className="fecha-icono">▦</span>
+            <div>
+              <strong>Nuevo día</strong>
+              <p>Nuevas oportunidades</p>
+            </div>
+          </div>
+
+          <div className="estrella estrella-1">*</div>
+          <div className="estrella estrella-2">*</div>
+          <div className="estrella estrella-3">*</div>
+        </div>
+      </section>
+  }
+
+  
 
       <header className="encabezado">
 
@@ -223,11 +330,11 @@ const editarTarea = (tarea: any) => {
 
       {/* TAREAS */}
 
-      <section className="seccion-tareas">
+      <section className="seccion-tareas" id="mis-tareas">
 
         <div className="titulo-tareas">
 
-          <h2>Mis tareas</h2>
+         <h2 id="mis-tareas">Mis tareas</h2>
 
           <span>
             {tareas.length} tareas
@@ -318,4 +425,3 @@ const editarTarea = (tarea: any) => {
 }
 
 export default App
-

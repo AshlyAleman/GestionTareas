@@ -26,10 +26,9 @@ def tareas():
 
         data = request.get_json()
 
-        titulo = data.get('titulo')
+        titulo = data.get('titulo') 
         descripcion = data.get('descripcion')
 
-        # Valores automáticos
         estado = 'Pendiente'
         usuario_id = 1
 
@@ -48,14 +47,12 @@ def tareas():
         ))
 
         conexion.commit()
-
         conexion.close()
-
 
     # OBTENER TODAS LAS TAREAS
     conexion = conectar_base_datos()
     cursor = conexion.cursor()
-
+ 
     cursor.execute("""
         SELECT id, titulo, descripcion, estado, usuario_id
         FROM Tareas
@@ -64,7 +61,6 @@ def tareas():
     resultado = cursor.fetchall()
 
     conexion.close()
-
 
     return {
         'tareas': [
@@ -80,7 +76,60 @@ def tareas():
     }
 
 
-app.run(debug=True)
+@app.route('/tareas/<int:id>', methods=['PUT'])
+def actualizar_tarea(id):
+
+    data = request.get_json()
+
+    print(data)
+
+    titulo = data.get('titulo')
+    descripcion = data.get('descripcion')
+    estado = data.get('estado')
+
+    conexion = conectar_base_datos()
+    cursor = conexion.cursor()
+
+    cursor.execute("""
+        UPDATE Tareas
+        SET titulo = ?, descripcion = ?, estado = ?
+        WHERE id = ?
+    """, (
+        titulo,
+        descripcion,
+        estado,
+        id
+    ))
+
+    conexion.commit()
+    conexion.close()
+
+    return {
+        'mensaje': 'Tarea actualizada correctamente'
+    }
+
+
+@app.route('/tareas/<int:id>', methods=['DELETE'])
+def eliminar_tarea(id):
+
+    conexion = conectar_base_datos()
+    cursor = conexion.cursor()
+
+    cursor.execute("""
+        DELETE FROM Tareas
+        WHERE id = ?
+    """, (id,))
+
+    conexion.commit()
+    conexion.close()
+
+    return {
+        'mensaje': 'Tarea eliminada correctamente'
+    }
+
+
+if __name__ == '__main__':
+    app.run(debug=True)
 
 
 
@@ -105,7 +154,7 @@ app.run(debug=True)
     #    nueva_tarea = request.form.get('tarea', '').strip()
       #  if nueva_tarea:
      #       tareas_guardadas.append(nueva_tarea)
-
+  
     #lista_tareas = ''.join(f'<li>{tarea}</li>' for tarea in tareas_guardadas)
    # return f'''
     #    <h1>Creacion APIS REST</h1>
